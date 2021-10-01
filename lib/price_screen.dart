@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'coin_data.dart';
 
@@ -13,14 +14,18 @@ class _PriceScreenState extends State<PriceScreen> {
     List<DropdownMenuItem<String>> dropDownList = [];
 
     for (String currency in currenciesList) {
-      var newItem = DropdownMenuItem(
-        child: Text(currency), 
-        value: currency
-        );
+      var newItem = DropdownMenuItem(child: Text(currency), value: currency);
 
       dropDownList.add(newItem);
     }
     return dropDownList;
+  }
+
+  List<Text> iosPickerGenerator() {
+    List<Text> pickerItems = [];
+    for (String currency in currenciesList) {
+      pickerItems.add(Text(currency));
+    }
   }
 
   @override
@@ -55,11 +60,27 @@ class _PriceScreenState extends State<PriceScreen> {
             ),
           ),
           Container(
-            height: 150.0,
-            alignment: Alignment.center,
-            padding: EdgeInsets.only(bottom: 30.0),
-            color: Colors.lightBlue,
-            child: DropdownButton<String>(
+              height: 150.0,
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(bottom: 30.0),
+              color: Colors.lightBlue,
+              child: CupertinoPicker(
+                backgroundColor: Colors.lightBlue,
+                itemExtent: 32.0,
+                onSelectedItemChanged: (selectedIndex) {
+                  print(selectedIndex);
+                },
+                children: iosPickerGenerator(),
+              ),
+              ),
+        ],
+      ),
+    );
+  }
+}
+
+
+/*child: DropdownButton<String>(
               value: selectedCurrency,
               items: dropDownItemsGenerator(),
               onChanged: (value) {
@@ -67,10 +88,4 @@ class _PriceScreenState extends State<PriceScreen> {
                   selectedCurrency = value;
                 });
               },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+            ),*/
